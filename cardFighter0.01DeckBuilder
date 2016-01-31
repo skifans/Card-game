@@ -14,6 +14,7 @@ DARKPINK  = (255,  20, 147)
 GREEN     = (  0, 255,   0)
 WHITE     = (255, 255, 255)
 DARKGREEN = (  0, 155,   0)
+RED       = (255,   0,   0)
 BGCOLOR = WHITE
 
 #set up display
@@ -24,6 +25,7 @@ wn = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT)) #set the width of the 
 BASICFONT = pygame.font.SysFont('ActionIsShaded', 24) #set font to be used
 pygame.display.set_caption('Card Fighter')
 screen=pygame.display.set_mode((0,0))
+mainDeck = []
 
 def terminate():
     #code which closes the windows after the game is over
@@ -93,7 +95,7 @@ def menuFunction():
             txt_button("Single player",150,50,200,50,GREEN,DARKGREEN,BLACK,single) #make singplayer button
             txt_button("Muilti player",450,50,200,50,GREEN,DARKGREEN,BLACK,muilti) #make muiltiplayer button
             txt_button("Close",300,150,200,50,GREEN,DARKGREEN,BLACK,terminate) #make close button
-            txt_button("Deck Builder", 250,250,250, 250,GREEN,DARKGREEN,BLACK, deckBuilderScreen) #make deck Builder screen button
+            txt_button("Deck Builder", 300,250,200, 50,GREEN,DARKGREEN,BLACK, deckBuilderScreen) #make deck Builder screen button
             pygame.display.flip() #update pygame
         time.sleep(0.1)
 
@@ -238,18 +240,32 @@ def whenClicked():
 def deckBuilderScreen():
     choice = False
     deckBuilder = True
-    wn.fill(BGCOLOR)
-    message_display("Pick our cards from classes below: 20 Cards in Total", 200, 200, 20, GREEN)
+    wn.fill(DARKPINK)
+    message_display("Pick your cards from classes below: 20 Cards in Total", 450, 150, 20, GREEN)
     while deckBuilder==True:
         for event in pygame.event.get():
             txt_button("Return", 200, 200, 75, 75, GREEN, DARKGREEN, BLACK, menuFunction)
             txt_button("Exit", 600, 200, 75, 75, GREEN, DARKGREEN, BLACK, terminate)
-            img_button(200, 500, 400, 400, cardSelect, "cardOne", "cardOne")
+            img_button(200, 500, 400, 400, cardSelect, "cardOne.jpg", "cardOne.jpg")
             pygame.display.flip()
 
 def cardSelect(cardFile):
-    deck.append(cardFile)
+    if checkDeck() == True:
+        mainDeck.append(cardFile)
+    else:
+        message_display("WARNING DECK ALREADY AT MAX CAPACITY", 450, 450, 75, RED)
+        time.sleep(2)
 
+    print(mainDeck)
+    return mainDeck
 
+def checkDeck():
+    cardCount=0
+    for i in mainDeck:
+        cardCount+=1
+    if cardCount>= 20:
+        return False
+    else:
+        return True
 menuFunction()
 terminate()
