@@ -1,3 +1,8 @@
+"""
+Current Modifications:
+        Unindented and moved setCards() so that can be accessed no-matter which game mode is active
+"""
+
 #this code is designed to be used in python 3.2 with the pygame addon.
 import pygame, time, sys, ctypes, os
 from pygame.locals import *
@@ -86,6 +91,23 @@ def img_button(x,y,w,h,name_of_function_to_call_when_clicked,filename, argumentF
         if click[0] == 1: #check click (above if checks mouse is on button)
             name_of_function_to_call_when_clicked(argumentForFunction) #do this when clicked (variable needs not to have brackets)
 
+def set_cards(): #set up the cards function
+    global cards, card_list
+    cards = {}
+#   cards['Name of card'] = name, health modifer, amour modifer, weapon modifer, duribility, card type
+#   card types
+#   0:  Heal
+#   1:  Weapon
+#   2:  Amour
+#   3:  card type
+    cards['0001'] = ['Iron Kettle',0,0,2,10,2]
+    cards['0002'] = ['Sting',-1,0,1,10,1]
+    cards['0003'] = ['Lambas Bread',5,0,0,1,0]
+
+    card_list = [] #list of all card names
+    for card_name in cards:
+        card_list.append(card_name) #add card names to list
+
 def menuFunction():
     global menu
     wn.fill(BGCOLOR)
@@ -112,22 +134,6 @@ def muilti(): #muiltiplayer function
     global first
     first = True #first turn is true
 
-    def set_cards(): #set up the cards function
-        global cards, card_list
-        cards = {}
-#   cards['Name of card'] = name, health modifer, amour modifer, weapon modifer, duribility, card type
-#   card types
-#   0:  Heal
-#   1:  Weapon
-#   2:  Amour
-#   3:  card type
-        cards['0001'] = ['Iron Kettle',0,0,2,10,2]
-        cards['0002'] = ['Sting',-1,0,1,10,1]
-        cards['0003'] = ['Lambas Bread',5,0,0,1,0]
-
-        card_list = [] #list of all card names
-        for card_name in cards:
-            card_list.append(card_name) #add card names to list
 
     def set_enemy(): #set up enemy player
         global ehealth, eamour, eweapons, ename, edeck, ehand, eamourm, eweaponsm, edurability
@@ -237,23 +243,39 @@ def turn_1():
 def whenClicked():
     return "clicked"
 
+#Deck Builder Check Run Code:
+set_cards()
+
 def deckBuilderScreen():
     choice = False
     deckBuilder = True
     wn.fill(DARKPINK)
     message_display("Pick your cards from classes below: 20 Cards in Total", 450, 150, 20, GREEN)
-    while deckBuilder==True:
+    #Set up template so that position, description etc. can be easily modified no matter the card
+    #[X, Y, WIDTH, HEIGHT]
+    cardAttributes = ["Name:", "Health Modifier:", "Armour Modifer:", "Weapon Modifer:", "Durability:", "Card Type:"]
+    cardOneTemplate = [300, 400, 150, 200]
+    while deckBuilder == True:
         for event in pygame.event.get():
             txt_button("Return", 200, 200, 75, 75, GREEN, DARKGREEN, BLACK, menuFunction)
             txt_button("Exit", 600, 200, 75, 75, GREEN, DARKGREEN, BLACK, terminate)
-            img_button(200, 500, 400, 400, cardSelect, "cardOne.jpg", "cardOne.jpg")
+            img_button(cardOneTemplate[0], cardOneTemplate[1], cardOneTemplate[2], cardOneTemplate[3], cardSelect, "cardOne.jpg", "cardOne.jpg")
+            #Description Layout
+            cardAttributeY = cardOneTemplate[1] + 250
+            attributeY = cardOneTemplate[1] + 250
+            for i in (cardAttributes):
+                message_display(i, cardOneTemplate[0]+50, attributeY, 20, BLACK)
+                attributeY += 20
+            for i in range(0,(len(cardAttributes))):
+                message_display(str(cards["0001"][i]), cardOneTemplate[0]+ 150, cardAttributeY,20, GREEN)
+                cardAttributeY += 20
             pygame.display.flip()
 
 def cardSelect(cardFile):
     if checkDeck() == True:
         mainDeck.append(cardFile)
     else:
-        message_display("WARNING DECK ALREADY AT MAX CAPACITY", 450, 450, 75, RED)
+        message_display("WARNING DECK ALREADY AT MAX CAPACITY", 450, 450, 50, RED)
         time.sleep(2)
 
     print(mainDeck)
@@ -267,5 +289,6 @@ def checkDeck():
         return False
     else:
         return True
+
 menuFunction()
 terminate()
