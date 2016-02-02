@@ -128,8 +128,8 @@ def single(): #single player function
 
 def keyboard_example():
     global InputOn
-    InputOn=1
-    b=keyboard()
+    InputOn=2 #letters & numbers (1 for letters only)
+    b=keyboard(2) #2=< charectors needed
     print(b)
 
 def addletter(letter):
@@ -138,10 +138,10 @@ def addletter(letter):
     print(string)
     pass
 
-def keyboard():
+def keyboard(minlength):
     global string, InputOn
     string=""
-    while InputOn==1:
+    while InputOn!=0:
         for event in pygame.event.get():
             wn.fill(BGCOLOR)
             message_display(string,400.5,150,16,BLACK)
@@ -208,6 +208,26 @@ def keyboard():
                 elif key[pygame.K_RETURN]:
                     if len(string)>0:
                         closeinput(string)
+                elif key[pygame.K_0]:
+                    addletter("0")
+                elif key[pygame.K_1]:
+                    addletter("1")
+                elif key[pygame.K_2]:
+                    addletter("2")
+                elif key[pygame.K_3]:
+                    addletter("3")
+                elif key[pygame.K_4]:
+                    addletter("4")
+                elif key[pygame.K_5]:
+                    addletter("5")
+                elif key[pygame.K_6]:
+                    addletter("6")
+                elif key[pygame.K_7]:
+                    addletter("7")
+                elif key[pygame.K_8]:
+                    addletter("8")
+                elif key[pygame.K_9]:
+                    addletter("9")
             else:
                 txt_button('A',213.5,200,30,30,WHITE,GREY,BLACK,addletter, "A") #have a button with a letter, which calls a function with the argument of that letter.
                 txt_button('B',244.5,200,30,30,WHITE,GREY,BLACK,addletter, "B")
@@ -236,10 +256,24 @@ def keyboard():
                 txt_button('X',523.5,230,30,30,WHITE,GREY,BLACK,addletter, "X")
                 txt_button('Y',554.5,230,30,30,WHITE,GREY,BLACK,addletter, "Y")
                 txt_button('Z',585.5,230,30,30,WHITE,GREY,BLACK,addletter, "Z")
-                if len(string)>0: #make sure that at least one letter has been entered (0 letters was also causing a crash)
+                if len(string)>minlength-1: #make sure that at least one letter has been entered (0 letters was also causing a crash)
                     txt_button('Finnished',213.5,260,402,30,WHITE,GREY,BLACK,closeinput, string) #calls close input function
                     txt_button('Clear',213.5,290,201,30,WHITE,GREY,BLACK,clear, "")
                     txt_button('Backspace',404.5,290,201,30,WHITE,GREY,BLACK,backspace, "")
+                else:
+                    message_display("You need to enter "+str(minlength)+" or more charectors",399.5,275,16,BLACK)
+
+                if InputOn==2:
+                    txt_button('0',213.5,170,30,30,WHITE,GREY,BLACK,addletter, "0") #have a button with a letter, which calls a function with the argument of that letter.
+                    txt_button('1',244.5,170,30,30,WHITE,GREY,BLACK,addletter, "1")
+                    txt_button('2',275.5,170,30,30,WHITE,GREY,BLACK,addletter, "2")
+                    txt_button('3',306.5,170,30,30,WHITE,GREY,BLACK,addletter, "3")
+                    txt_button('4',337.5,170,30,30,WHITE,GREY,BLACK,addletter, "4")
+                    txt_button('5',368.5,170,30,30,WHITE,GREY,BLACK,addletter, "5")
+                    txt_button('6',399.5,170,30,30,WHITE,GREY,BLACK,addletter, "6")
+                    txt_button('7',430.5,170,30,30,WHITE,GREY,BLACK,addletter, "7")
+                    txt_button('8',461.5,170,30,30,WHITE,GREY,BLACK,addletter, "8")
+                    txt_button('9',492.5,170,30,30,WHITE,GREY,BLACK,addletter, "9")
                 pygame.display.flip()
     wn.fill(BGCOLOR)
     pygame.display.flip()
@@ -256,7 +290,7 @@ def backspace():
 def closeinput(string):
     global InputOn
     InputOn=0 #loop controlling buttons will not run
-    keyboard() #calls back function (without buttons) so that text can be returned via the original function
+    keyboard(0) #calls back function (without buttons) so that text can be returned via the original function (user dosnt need to enter anything so 0 min length is fine)
 
 def muilti(): #muiltiplayer function
     global menu, wn
