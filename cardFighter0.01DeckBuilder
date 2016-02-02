@@ -59,7 +59,7 @@ def message_display(text, x, y, font_size, colour):
     screen.blit(TextSurf, TextRect) #send to screen, needs to be updated/fliped to be worked
 
 #function for buttoms
-#example syntax to call button("return",150,450,100,50,DARKGREEN,GREEN,BLACK,action) note the lack of brackets on action function.
+#example syntax to call button("return",150,450,100,50,DARKGREEN,GREEN,BLACK,action,"") note the lack of brackets on action function. For no argument use "", otherwise type it.
 def txt_button(msg,x,y,w,h,inactive_colour,active_colour,text_colour,name_of_function_to_call_when_clicked, argument):
     #need pygame.flip/update outside of function
     click = pygame.mouse.get_pressed() #get mouse state (clicked/not clicked)
@@ -67,7 +67,10 @@ def txt_button(msg,x,y,w,h,inactive_colour,active_colour,text_colour,name_of_fun
     if x+w > mouse[0] > x and y+h > mouse[1] > y: #check if mouse is on button
         pygame.draw.rect(screen, active_colour,(x,y,w,h)) #change to active colour
         if click[0] == 1: #check click (above if checks mouse is on button)
-            name_of_function_to_call_when_clicked(argument) #do this when clicked (veriable needs not to have brackets)
+            if argument=="":
+                name_of_function_to_call_when_clicked() #do this when clicked (veriable needs not to have brackets)
+            else:
+                name_of_function_to_call_when_clicked(argument) #do this when clicked (veriable needs not to have brackets)
     else:
         pygame.draw.rect(screen, inactive_colour,(x,y,w,h)) #mouse not on button, switch to inactive colour
 
@@ -110,10 +113,11 @@ def menuFunction():
     menu=1 #loop reacuent
     while menu==1:
         for event in pygame.event.get():
-            txt_button("Single player",150,50,200,50,GREEN,DARKGREEN,BLACK,single) #make singplayer button
-            txt_button("Muilti player",450,50,200,50,GREEN,DARKGREEN,BLACK,muilti) #make muiltiplayer button
-            txt_button("Close",300,150,200,50,GREEN,DARKGREEN,BLACK,terminate) #make close button
-            txt_button("Deck Builder", 300,250,200, 50,GREEN,DARKGREEN,BLACK, deckBuilderScreen) #make deck Builder screen button
+            txt_button("Single player",150,50,200,50,GREEN,DARKGREEN,BLACK,single, "") #make singplayer button
+            txt_button("Muilti player",450,50,200,50,GREEN,DARKGREEN,BLACK,muilti, "") #make muiltiplayer button
+            txt_button("Close",300,150,200,50,GREEN,DARKGREEN,BLACK,terminate, "") #make close button
+            txt_button("Deck Builder", 300,250,200, 50,GREEN,DARKGREEN,BLACK, deckBuilderScreen, "") #make deck Builder screen button
+            txt_button("Keyboard test", 300, 350, 200, 50, GREEN, DARKGREEN, BLACK, keyboard_example, "")
             pygame.display.flip() #update pygame
         time.sleep(0.1)
 
@@ -122,38 +126,61 @@ def single(): #single player function
     menu=0
     turn_1()
 
-def ignore():
+def keyboard_example():
+    global InputOn
+    InputOn=1
+    b=keyboard()
+    print(b)
+
+def addletter(letter):
+    global string
+    string=string+letter #adds letter from argument to all the others
+    print(string)
     pass
 
 def keyboard():
-    txt_button('A',213.5,200,30,30,GREY,GREEN,BLACK,ignore)
-    txt_button('B',244.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('C',275.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('D',306.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('E',337.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('F',368.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('G',399.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('H',430.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('I',461.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('J',492.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('K',523.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('L',554.5,200,30,30,GREY,GREY,BLACK,ignore)
-    txt_button('M',585.5,200,30,30,GREY,GREY,BLACK,ignore)
-
-    txt_button('N',213.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('O',244.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('P',275.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('Q',306.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('R',337.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('S',368.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('T',399.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('U',430.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('V',461.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('W',492.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('X',523.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('Y',554.5,230,30,30,WHITE,GREY,BLACK,ignore)
-    txt_button('Z',585.5,230,30,30,WHITE,GREY,BLACK,ignore)
+    global string, InputOn
+    string=""
+    wn.fill(BGCOLOR)
     pygame.display.flip()
+    while InputOn==1:
+        for event in pygame.event.get():
+            txt_button('A',213.5,200,30,30,WHITE,GREY,BLACK,addletter, "A") #have a button with a letter, which calls a function with the argument of that letter.
+            txt_button('B',244.5,200,30,30,WHITE,GREY,BLACK,addletter, "B")
+            txt_button('C',275.5,200,30,30,WHITE,GREY,BLACK,addletter, "C")
+            txt_button('D',306.5,200,30,30,WHITE,GREY,BLACK,addletter, "D")
+            txt_button('E',337.5,200,30,30,WHITE,GREY,BLACK,addletter, "E")
+            txt_button('F',368.5,200,30,30,WHITE,GREY,BLACK,addletter, "F")
+            txt_button('G',399.5,200,30,30,WHITE,GREY,BLACK,addletter, "G")
+            txt_button('H',430.5,200,30,30,WHITE,GREY,BLACK,addletter, "H")
+            txt_button('I',461.5,200,30,30,WHITE,GREY,BLACK,addletter, "I")
+            txt_button('J',492.5,200,30,30,WHITE,GREY,BLACK,addletter, "J")
+            txt_button('K',523.5,200,30,30,WHITE,GREY,BLACK,addletter, "K")
+            txt_button('L',554.5,200,30,30,WHITE,GREY,BLACK,addletter, "L")
+            txt_button('M',585.5,200,30,30,WHITE,GREY,BLACK,addletter, "M")
+
+            txt_button('N',213.5,230,30,30,WHITE,GREY,BLACK,addletter, "N")
+            txt_button('O',244.5,230,30,30,WHITE,GREY,BLACK,addletter, "O")
+            txt_button('P',275.5,230,30,30,WHITE,GREY,BLACK,addletter, "P")
+            txt_button('Q',306.5,230,30,30,WHITE,GREY,BLACK,addletter, "Q")
+            txt_button('R',337.5,230,30,30,WHITE,GREY,BLACK,addletter, "R")
+            txt_button('S',368.5,230,30,30,WHITE,GREY,BLACK,addletter, "S")
+            txt_button('T',399.5,230,30,30,WHITE,GREY,BLACK,addletter, "T")
+            txt_button('U',430.5,230,30,30,WHITE,GREY,BLACK,addletter, "U")
+            txt_button('V',461.5,230,30,30,WHITE,GREY,BLACK,addletter, "V")
+            txt_button('W',492.5,230,30,30,WHITE,GREY,BLACK,addletter, "W")
+            txt_button('X',523.5,230,30,30,WHITE,GREY,BLACK,addletter, "X")
+            txt_button('Y',554.5,230,30,30,WHITE,GREY,BLACK,addletter, "Y")
+            txt_button('Z',585.5,230,30,30,WHITE,GREY,BLACK,addletter, "Z")
+            if len(string)>0: #make sure that at least one letter has been entered (0 letters was also causing a crash)
+                txt_button('Finnished',213.5,260,402,30,WHITE,GREY,BLACK,closeinput, string) #calls close input functio
+            pygame.display.flip()
+    return string
+
+def closeinput(string):
+    global InputOn
+    InputOn=0 #loop controlling buttons will not run
+    keyboard() #calls back function (without buttons) so that text can be returned via the original function
 
 def muilti(): #muiltiplayer function
     global menu, wn
@@ -280,7 +307,7 @@ def turn_1():
     while turn==1:
         for event in pygame.event.get():
             for i in range (len(hand1)):
-                txt_button("Close",300,100,200,50,GREEN,DARKGREEN,BLACK,terminate)
+                txt_button("Close",300,100,200,50,GREEN,DARKGREEN,BLACK,terminate,"")
                 img_button((i*150)+100,600,150,200,terminate,str(i+1)+".jpg")
         pygame.display.flip()
         time.sleep(0.2)
@@ -302,9 +329,9 @@ def deckBuilderScreen():
     cardOneTemplate = [300, 400, 150, 200]
     while deckBuilder == True:
         for event in pygame.event.get():
-            txt_button("Return", 200, 200, 75, 75, GREEN, DARKGREEN, BLACK, menuFunction)
-            txt_button("Exit", 600, 200, 75, 75, GREEN, DARKGREEN, BLACK, terminate)
-            img_button(cardOneTemplate[0], cardOneTemplate[1], cardOneTemplate[2], cardOneTemplate[3], cardSelect, "cardOne.jpg", "cardOne.jpg")
+            txt_button("Return", 200, 200, 75, 75, GREEN, DARKGREEN, BLACK, menuFunction, "")
+            txt_button("Exit", 600, 200, 75, 75, GREEN, DARKGREEN, BLACK, terminate, "")
+            img_button(cardOneTemplate[0], cardOneTemplate[1], cardOneTemplate[2], cardOneTemplate[3], cardSelect, "1.jpg")
             #Description Layout
             cardAttributeY = cardOneTemplate[1] + 250
             attributeY = cardOneTemplate[1] + 250
