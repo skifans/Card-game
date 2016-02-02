@@ -141,10 +141,10 @@ def addletter(letter):
 def keyboard():
     global string, InputOn
     string=""
-    wn.fill(BGCOLOR)
-    pygame.display.flip()
     while InputOn==1:
         for event in pygame.event.get():
+            wn.fill(BGCOLOR)
+            message_display(string,400.5,150,16,BLACK)
             if event.type==KEYDOWN:
                 key = pygame.key.get_pressed() #get key pressed
                 if key[pygame.K_a]:
@@ -199,6 +199,15 @@ def keyboard():
                     addletter("Y")
                 elif key[pygame.K_z]:
                     addletter("Z")
+                elif key[pygame.K_CLEAR]:
+                    if len(string)>0: #make sure there is something to clear/delete from/send off
+                        clear()
+                elif key[pygame.K_BACKSPACE]:
+                    if len(string)>0:
+                        backspace()
+                elif key[pygame.K_RETURN]:
+                    if len(string)>0:
+                        closeinput(string)
             else:
                 txt_button('A',213.5,200,30,30,WHITE,GREY,BLACK,addletter, "A") #have a button with a letter, which calls a function with the argument of that letter.
                 txt_button('B',244.5,200,30,30,WHITE,GREY,BLACK,addletter, "B")
@@ -229,8 +238,20 @@ def keyboard():
                 txt_button('Z',585.5,230,30,30,WHITE,GREY,BLACK,addletter, "Z")
                 if len(string)>0: #make sure that at least one letter has been entered (0 letters was also causing a crash)
                     txt_button('Finnished',213.5,260,402,30,WHITE,GREY,BLACK,closeinput, string) #calls close input function
+                    txt_button('Clear',213.5,290,201,30,WHITE,GREY,BLACK,clear, "")
+                    txt_button('Backspace',404.5,290,201,30,WHITE,GREY,BLACK,backspace, "")
                 pygame.display.flip()
+    wn.fill(BGCOLOR)
+    pygame.display.flip()
     return string
+
+def clear():
+    global string
+    string=""
+
+def backspace():
+    global string
+    string=string[:-1]
 
 def closeinput(string):
     global InputOn
