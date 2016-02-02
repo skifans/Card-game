@@ -145,36 +145,91 @@ def keyboard():
     pygame.display.flip()
     while InputOn==1:
         for event in pygame.event.get():
-            txt_button('A',213.5,200,30,30,WHITE,GREY,BLACK,addletter, "A") #have a button with a letter, which calls a function with the argument of that letter.
-            txt_button('B',244.5,200,30,30,WHITE,GREY,BLACK,addletter, "B")
-            txt_button('C',275.5,200,30,30,WHITE,GREY,BLACK,addletter, "C")
-            txt_button('D',306.5,200,30,30,WHITE,GREY,BLACK,addletter, "D")
-            txt_button('E',337.5,200,30,30,WHITE,GREY,BLACK,addletter, "E")
-            txt_button('F',368.5,200,30,30,WHITE,GREY,BLACK,addletter, "F")
-            txt_button('G',399.5,200,30,30,WHITE,GREY,BLACK,addletter, "G")
-            txt_button('H',430.5,200,30,30,WHITE,GREY,BLACK,addletter, "H")
-            txt_button('I',461.5,200,30,30,WHITE,GREY,BLACK,addletter, "I")
-            txt_button('J',492.5,200,30,30,WHITE,GREY,BLACK,addletter, "J")
-            txt_button('K',523.5,200,30,30,WHITE,GREY,BLACK,addletter, "K")
-            txt_button('L',554.5,200,30,30,WHITE,GREY,BLACK,addletter, "L")
-            txt_button('M',585.5,200,30,30,WHITE,GREY,BLACK,addletter, "M")
+            if event.type==KEYDOWN:
+                key = pygame.key.get_pressed() #get key pressed
+                if key[pygame.K_a]:
+                    addletter("A")
+                elif key[pygame.K_b]:
+                    addletter("B")
+                elif key[pygame.K_c]:
+                    addletter("C")
+                elif key[pygame.K_d]:
+                    addletter("D")
+                elif key[pygame.K_e]:
+                    addletter("E")
+                elif key[pygame.K_f]:
+                    addletter("F")
+                elif key[pygame.K_g]:
+                    addletter("G")
+                elif key[pygame.K_h]:
+                    addletter("H")
+                elif key[pygame.K_i]:
+                    addletter("I")
+                elif key[pygame.K_j]:
+                    addletter("J")
+                elif key[pygame.K_k]:
+                    addletter("K")
+                elif key[pygame.K_l]:
+                    addletter("L")
+                elif key[pygame.K_m]:
+                    addletter("M")
+                elif key[pygame.K_n]:
+                    addletter("N")
+                elif key[pygame.K_o]:
+                    addletter("O")
+                elif key[pygame.K_p]:
+                    addletter("P")
+                elif key[pygame.K_q]:
+                    addletter("Q")
+                elif key[pygame.K_r]:
+                    addletter("R")
+                elif key[pygame.K_s]:
+                    addletter("S")
+                elif key[pygame.K_t]:
+                    addletter("T")
+                elif key[pygame.K_u]:
+                    addletter("U")
+                elif key[pygame.K_v]:
+                    addletter("V")
+                elif key[pygame.K_w]:
+                    addletter("W")
+                elif key[pygame.K_x]:
+                    addletter("X")
+                elif key[pygame.K_y]:
+                    addletter("Y")
+                elif key[pygame.K_z]:
+                    addletter("Z")
+            else:
+                txt_button('A',213.5,200,30,30,WHITE,GREY,BLACK,addletter, "A") #have a button with a letter, which calls a function with the argument of that letter.
+                txt_button('B',244.5,200,30,30,WHITE,GREY,BLACK,addletter, "B")
+                txt_button('C',275.5,200,30,30,WHITE,GREY,BLACK,addletter, "C")
+                txt_button('D',306.5,200,30,30,WHITE,GREY,BLACK,addletter, "D")
+                txt_button('E',337.5,200,30,30,WHITE,GREY,BLACK,addletter, "E")
+                txt_button('F',368.5,200,30,30,WHITE,GREY,BLACK,addletter, "F")
+                txt_button('G',399.5,200,30,30,WHITE,GREY,BLACK,addletter, "G")
+                txt_button('H',430.5,200,30,30,WHITE,GREY,BLACK,addletter, "H")
+                txt_button('I',461.5,200,30,30,WHITE,GREY,BLACK,addletter, "I")
+                txt_button('J',492.5,200,30,30,WHITE,GREY,BLACK,addletter, "J")
+                txt_button('K',523.5,200,30,30,WHITE,GREY,BLACK,addletter, "K")
+                txt_button('L',554.5,200,30,30,WHITE,GREY,BLACK,addletter, "L")
+                txt_button('M',585.5,200,30,30,WHITE,GREY,BLACK,addletter, "M")
 
-            txt_button('N',213.5,230,30,30,WHITE,GREY,BLACK,addletter, "N")
-            txt_button('O',244.5,230,30,30,WHITE,GREY,BLACK,addletter, "O")
-            txt_button('P',275.5,230,30,30,WHITE,GREY,BLACK,addletter, "P")
-            txt_button('Q',306.5,230,30,30,WHITE,GREY,BLACK,addletter, "Q")
-            txt_button('R',337.5,230,30,30,WHITE,GREY,BLACK,addletter, "R")
-            txt_button('S',368.5,230,30,30,WHITE,GREY,BLACK,addletter, "S")
-            txt_button('T',399.5,230,30,30,WHITE,GREY,BLACK,addletter, "T")
-            txt_button('U',430.5,230,30,30,WHITE,GREY,BLACK,addletter, "U")
-            txt_button('V',461.5,230,30,30,WHITE,GREY,BLACK,addletter, "V")
-            txt_button('W',492.5,230,30,30,WHITE,GREY,BLACK,addletter, "W")
-            txt_button('X',523.5,230,30,30,WHITE,GREY,BLACK,addletter, "X")
-            txt_button('Y',554.5,230,30,30,WHITE,GREY,BLACK,addletter, "Y")
-            txt_button('Z',585.5,230,30,30,WHITE,GREY,BLACK,addletter, "Z")
-            if len(string)>0: #make sure that at least one letter has been entered (0 letters was also causing a crash)
-                txt_button('Finnished',213.5,260,402,30,WHITE,GREY,BLACK,closeinput, string) #calls close input functio
-            pygame.display.flip()
+                txt_button('N',213.5,230,30,30,WHITE,GREY,BLACK,addletter, "N")
+                txt_button('O',244.5,230,30,30,WHITE,GREY,BLACK,addletter, "O")
+                txt_button('P',275.5,230,30,30,WHITE,GREY,BLACK,addletter, "P")
+                txt_button('Q',306.5,230,30,30,WHITE,GREY,BLACK,addletter, "Q")
+                txt_button('R',337.5,230,30,30,WHITE,GREY,BLACK,addletter, "R")
+                txt_button('S',368.5,230,30,30,WHITE,GREY,BLACK,addletter, "S")
+                txt_button('T',399.5,230,30,30,WHITE,GREY,BLACK,addletter, "T")
+                txt_button('U',430.5,230,30,30,WHITE,GREY,BLACK,addletter, "U")
+                txt_button('V',461.5,230,30,30,WHITE,GREY,BLACK,addletter, "V")
+                txt_button('W',492.5,230,30,30,WHITE,GREY,BLACK,addletter, "W")
+                txt_button('X',523.5,230,30,30,WHITE,GREY,BLACK,addletter, "X")
+                txt_button('Y',554.5,230,30,30,WHITE,GREY,BLACK,addletter, "Y")
+                txt_button('Z',585.5,230,30,30,WHITE,GREY,BLACK,addletter, "Z")
+                if len(string)>0: #make sure that at least one letter has been entered (0 letters was also causing a crash)
+                    txt_button('Finnished',213.5,260,402,30,WHITE,GREY,BLACK,closeinput, string) #calls close input function
+                pygame.display.flip()
     return string
 
 def closeinput(string):
