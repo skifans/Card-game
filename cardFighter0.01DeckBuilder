@@ -127,7 +127,7 @@ def single(): #single player function
     turn_1()
 
 def keyboard_example():
-    b=keyboard(1, 2) #1=< charectors needed, 2=letters and numbers
+    b=keyboard(1, 2, "test input") #1=< charectors needed, 2=letters and numbers
     print(b)
 
 def addletter(letter):
@@ -136,7 +136,7 @@ def addletter(letter):
     print(string)
     pass
 
-def keyboard(minlength, InputOn1):
+def keyboard(minlength, InputOn1, message):
     global string, InputOn
     InputOn=InputOn1
     string=""
@@ -144,6 +144,7 @@ def keyboard(minlength, InputOn1):
         for event in pygame.event.get():
             wn.fill(BGCOLOR)
             message_display(string,400.5,150,16,BLACK)
+            message_display(message,400,100,16,BLACK)
             if event.type==KEYDOWN:
                 key = pygame.key.get_pressed() #get key pressed
                 if key[pygame.K_a]:
@@ -311,7 +312,7 @@ def muilti(): #muiltiplayer function
         eweapons = 1 #there weapons
         eweaponsm = 0 #there weapons mod
         edurability = 0 #there durability
-        ename = str(input("What is the name of your champion player2: ")) #there name
+        ename = keyboard(1,2, "enter the name of palyer 2") #there name
         edeck = []
         for i in range(20): #20 card deck
             card = random.choice(card_list) #get random card from cardlist
@@ -332,13 +333,13 @@ def muilti(): #muiltiplayer function
         weaponsm = 0 #there weaponsm
         durability = 0 #there durability
 
-        keyboard()
+        name=keyboard(0, 2, "name of palyer 1")
 
         #txt_button('A',50,200,40,40,GREY,GREEN,BLACK,ignore)
         #pygame.display.flip()
 
 
-        name = str(input("What is the name of your champion player1: ")) #there name
+        ##name = str(input("What is the name of your champion player1: ")) #there name
 
         text = 'Health: ' + str(health)
         message_display(text,50,25,15,BLACK)
