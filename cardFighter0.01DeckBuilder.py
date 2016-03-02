@@ -28,6 +28,11 @@ pygame.display.set_caption('Card Fighter')
 screen=pygame.display.set_mode((0,0))
 mainDeck = []
 
+def cont():
+    global contvar
+    contvar=0
+    return contvar
+
 def terminate():
     #code which closes the windows after the game is over
     #time.sleep(2)
@@ -360,7 +365,7 @@ def muilti(): #muiltiplayer function
             hand.append(card) #add this card to hand
 
     def turn():
-        global health, amour, weapons, name, deck, hand, ehealth, eamour, eweapons, ename, edeck, ehand, first, amourm, weaponsm, eamourm, ewaponsm, durability, edurability
+        global health, amour, weapons, name, deck, hand, ehealth, eamour, eweapons, ename, edeck, ehand, first, amourm, weaponsm, eamourm, ewaponsm, durability, edurability, deck, hand, contvar
         if first == True: #if first time run say who fighting who.
             print("Champion " + name + " you are fighting champion " + ename + ".")
             first == False #make it so its no longer first time run
@@ -374,11 +379,18 @@ def muilti(): #muiltiplayer function
         print("Amour: " + str(amour)) #say what there amour is
         print("weapons " + str(weapons)) #say what there weapons are
         turn = True
+        contvar=1
+        while contvar==1:
+            for event in pygame.event.get():
+                message_display("Test",50,50,16,BLACK)
+                txt_button("Continue",100,100,100,20,GREEN,DARKGREEN,BLACK,cont,"")
+                pygame.display.flip()
+            time.sleep(0.2)
         while turn: #run loop for there actions
-            action = str(input("Enter your action")) #ask what there action is
-            if action == 'End': #if action end, end turn
+            action = keyboard(1,1,"Enter your action, your stats are as follows: \n Health: "+str(health)+"\nAmour: "+str(amour)+"\nWeapons: "+str(weapons))
+            if action == 'END': #if action end, end turn
                 turn = False
-            elif action == 'Attack': #if action attak
+            elif action == 'ATTACK': #if action attak
                 damage = (weapons + weaponsm)/(eamour + eamourm) #damage is weapons total agaisnt eamout total
                 if damage <= 0: #stops them doing negative damge
                     print("You do no damage.")
@@ -399,7 +411,7 @@ def muilti(): #muiltiplayer function
                         amourm = card[2] #apply amourm
                         weaponsm = card[3] #apply weaponsm
                         durability = card[4] #apply durability
-        if deck.len() == 0: #see if any deck is left
+        if len(deck) == 0: #see if any deck is left
             print("You have no deck left")
         else:
             hand.append(deck[0]) #add the first in deck to hand
