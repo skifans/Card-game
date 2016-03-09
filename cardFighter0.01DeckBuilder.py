@@ -29,7 +29,7 @@ screen=pygame.display.set_mode((0,0))
 mainDeck = []
 
 def cont():
-    global contvar
+    global contvar, action
     contvar=0
     return contvar
 
@@ -364,8 +364,28 @@ def muilti(): #muiltiplayer function
             deck.remove(card) #remove this card from deck
             hand.append(card) #add this card to hand
 
+    def end():
+        global turn, contvar
+        contvar=0
+        turn=False
+        return turn, contvar
+
+    def attack():
+        global weaponsm, ehealth, durability
+        damage = (weapons + weaponsm)/(eamour + eamourm) #damage is weapons total agaisnt eamout total
+        if damage <= 0: #stops them doing negative damge
+            print("You do no damage.")
+        else:
+            ehealth -= damage #takes of damge dealt
+            print("You do " + str(damage) + " damage.")
+        durability -= 1 #lowers weapons durability
+        if durability == 0:
+            print("You weapon broke") #says if weapon broke
+            weaponsm = 0 #reset weapon mod
+        turn = False #end turn
+
     def turn():
-        global health, amour, weapons, name, deck, hand, ehealth, eamour, eweapons, ename, edeck, ehand, first, amourm, weaponsm, eamourm, ewaponsm, durability, edurability, deck, hand, contvar
+        global health, amour, weapons, name, deck, hand, ehealth, eamour, eweapons, ename, edeck, ehand, first, amourm, weaponsm, eamourm, ewaponsm, durability, edurability, deck, hand, contvar, turn
         if first == True: #if first time run say who fighting who.
             print("Champion " + name + " you are fighting champion " + ename + ".")
             first == False #make it so its no longer first time run
@@ -383,34 +403,19 @@ def muilti(): #muiltiplayer function
         while contvar==1:
             for event in pygame.event.get():
                 message_display("Test",50,50,16,BLACK)
-                txt_button("Continue",100,100,100,20,GREEN,DARKGREEN,BLACK,cont,"")
+                txt_button("Attack",100,100,100,20,GREEN,DARKGREEN,BLACK,attack,"")
+                txt_button("End",200,100,100,20,GREEN,DARKGREEN,BLACK,end,"")
                 pygame.display.flip()
             time.sleep(0.2)
-        while turn: #run loop for there actions
-            action = keyboard(1,1,"Enter your action, your stats are as follows: \n Health: "+str(health)+"\nAmour: "+str(amour)+"\nWeapons: "+str(weapons))
-            if action == 'END': #if action end, end turn
-                turn = False
-            elif action == 'ATTACK': #if action attak
-                damage = (weapons + weaponsm)/(eamour + eamourm) #damage is weapons total agaisnt eamout total
-                if damage <= 0: #stops them doing negative damge
-                    print("You do no damage.")
-                else:
-                    ehealth -= damage #takes of damge dealt
-                    print("You do " + str(damage) + " damage.")
-                durability -= 1 #lowers weapons durability
-                if durability == 0:
-                    print("You weapon broke") #says if weapon broke
-                    weaponsm = 0 #reset weapon mod
-                turn = False #end turn
-            else:
-                for card in hand: #get all cards from hand
-                    if action == card[0]: #see if action is one
-                        hand.remove(card) #remove the card from hand
-                        action = None #change action to stop it removeing reacorsense
-                        health += card[1] #apply health
-                        amourm = card[2] #apply amourm
-                        weaponsm = card[3] #apply weaponsm
-                        durability = card[4] #apply durability
+##            else: #dont realy inderstant what this did/is far. Was as an else on when the user enterd a word not understood on the old keyboard.
+##                for card in hand: #get all cards from hand
+##                    if action == card[0]: #see if action is one
+##                        hand.remove(card) #remove the card from hand
+##                        action = None #change action to stop it removeing reacorsense
+##                        health += card[1] #apply health
+##                        amourm = card[2] #apply amourm
+##                        weaponsm = card[3] #apply weaponsm
+##                        durability = card[4] #apply durability
         if len(deck) == 0: #see if any deck is left
             print("You have no deck left")
         else:
