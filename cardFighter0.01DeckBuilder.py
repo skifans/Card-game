@@ -371,7 +371,7 @@ def muilti(): #muiltiplayer function
         return turn, contvar
 
     def attack():
-        global weaponsm, ehealth, durability
+        global weaponsm, ehealth, durability, contvar
         damage = (weapons + weaponsm)/(eamour + eamourm) #damage is weapons total agaisnt eamout total
         if damage <= 0: #stops them doing negative damge
             print("You do no damage.")
@@ -383,6 +383,7 @@ def muilti(): #muiltiplayer function
             print("You weapon broke") #says if weapon broke
             weaponsm = 0 #reset weapon mod
         turn = False #end turn
+        contvar=2
 
     def turn():
         global health, amour, weapons, name, deck, hand, ehealth, eamour, eweapons, ename, edeck, ehand, first, amourm, weaponsm, eamourm, ewaponsm, durability, edurability, deck, hand, contvar, turn
@@ -400,10 +401,18 @@ def muilti(): #muiltiplayer function
         print("weapons " + str(weapons)) #say what there weapons are
         turn = True
         contvar=1
-        while contvar==1:
+        while contvar!=0:
             for event in pygame.event.get():
-                message_display("Test",50,50,16,BLACK)
-                txt_button("Attack",100,100,100,20,GREEN,DARKGREEN,BLACK,attack,"")
+                text = 'Health: ' + str(health)
+                message_display(text,50,25,15,BLACK)
+                text = 'Armour: ' + str(amour+amourm)
+                message_display(text,50,40,15,BLACK)
+                text = 'Weapons: ' + str(weapons+weaponsm)
+                message_display(text,50,55,15,BLACK)
+                if contvar!=2:
+                    txt_button("Attack",100,100,100,20,GREEN,DARKGREEN,BLACK,attack,"")
+                else:
+                    txt_button("Attack",100,100,100,20,DARKGREEN,DARKGREEN,BLACK,attack,"")
                 txt_button("End",200,100,100,20,GREEN,DARKGREEN,BLACK,end,"")
                 pygame.display.flip()
             time.sleep(0.2)
