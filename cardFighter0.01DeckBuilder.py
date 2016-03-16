@@ -364,6 +364,11 @@ def muilti(): #muiltiplayer function
             deck.remove(card) #remove this card from deck
             hand.append(card) #add this card to hand
 
+    def NoAction(message):
+        #called when a button has already been clicked to display message
+        message_display(str(message),200,90,16,BLACK)
+        #pass
+
     def end():
         global turn, contvar
         contvar=0
@@ -412,7 +417,7 @@ def muilti(): #muiltiplayer function
                 if contvar!=2:
                     txt_button("Attack",100,100,100,20,GREEN,DARKGREEN,BLACK,attack,"")
                 else:
-                    txt_button("Attack",100,100,100,20,DARKGREEN,DARKGREEN,BLACK,attack,"")
+                    txt_button("Attack",100,100,100,20,DARKGREEN,DARKGREEN,BLACK,NoAction,"You have already attacked")
                 txt_button("End",200,100,100,20,GREEN,DARKGREEN,BLACK,end,"")
                 pygame.display.flip()
             time.sleep(0.2)
