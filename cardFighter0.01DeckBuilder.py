@@ -375,6 +375,19 @@ def muilti(): #muiltiplayer function
         turn=False
         return turn, contvar
 
+    def showcards():
+        global hand, deck
+        for i in range(hand):
+            print("card, ",i)
+            image = pygame.image.load(os.path.join("cards",hand[i]))
+            screen.blit(image, (i*50,400)) #the location of the image
+            if x+w > mouse[0] > x and y+h > mouse[1] > y: #check if mouse is on button
+                print("on card "+str(filename))
+                if click[0] == 1: #check click (above if checks mouse is on button)
+                    name_of_function_to_call_when_clicked() #do this when clicked (veriable needs not to have brackets)
+
+
+
     def attack():
         global weaponsm, ehealth, durability, contvar
         damage = (weapons + weaponsm)/(eamour + eamourm) #damage is weapons total agaisnt eamout total
@@ -389,6 +402,30 @@ def muilti(): #muiltiplayer function
             weaponsm = 0 #reset weapon mod
         turn = False #end turn
         contvar=2
+
+    def showcardsheld():
+        global hand
+        print(hand)
+        for i in range(len(hand)):
+            displaycardsheld(i)
+
+    def displaycardsheld(id):
+        global hand
+        print("displaying card: ",hand[id])
+        if hand[id][1]==0:
+            #weapon
+            image = pygame.image.load(os.path.join("cards","weapon base.jpg"))
+            screen.blit(image, ((id*120)+100,400)) #the location of the image
+            message_display("Attack: "+str(hand[id][1]),(id*120)+160,515,12,BLACK)
+            message_display("Mana cost: "+str(hand[id][4]),(id*120)+160,535,12,BLACK)
+            message_display("Duribility: "+str(hand[id][3]),(id*120)+160,555,12,BLACK)
+        if hand[id][1]>0:
+            #armour
+            image = pygame.image.load(os.path.join("cards","armour base.jpg"))
+            screen.blit(image, ((id*120)+100,400)) #the location of the image
+            message_display("Attack: "+str(hand[id][1]),(id*120)+160,515,12,BLACK)
+            message_display("Mana cost: "+str(hand[id][4]),(id*120)+160,535,12,BLACK)
+            message_display("Duribility: "+str(hand[id][3]),(id*120)+160,555,12,BLACK)
 
     def turn():
         global health, amour, weapons, name, deck, hand, ehealth, eamour, eweapons, ename, edeck, ehand, first, amourm, weaponsm, eamourm, ewaponsm, durability, edurability, deck, hand, contvar, turn
@@ -419,6 +456,7 @@ def muilti(): #muiltiplayer function
                 else:
                     txt_button("Attack",100,100,100,20,DARKGREEN,DARKGREEN,BLACK,NoAction,"You have already attacked")
                 txt_button("End",200,100,100,20,GREEN,DARKGREEN,BLACK,end,"")
+                txt_button("Show cards",300,100,100,20,GREEN,DARKGREEN,BLACK,showcardsheld,"")
                 pygame.display.flip()
             time.sleep(0.2)
 ##            else: #dont realy inderstant what this did/is far. Was as an else on when the user enterd a word not understood on the old keyboard.
