@@ -560,8 +560,9 @@ def deckBuilderScreen():
             pygame.display.flip()
 
 def classPicker(mode):
-    classPicker = True
-    while classPicker == True:
+    global menu
+    menu = True
+    while menu == True:
         for event in pygame.event.get():
             wn.fill(DARKPINK)
             txt_button("Return", 200, 200, 75, 75, GREEN, DARKGREEN, BLACK, menuFunction, "")
@@ -590,6 +591,8 @@ def displayCard(card,cardKey, deck):
         cardAttributeY += 20
 
 def cardPicker(array):
+    global menu
+    menu = False
     cardPicker = True
     while cardPicker == True:
         for event in pygame.event.get():
@@ -612,10 +615,13 @@ def cardPicker(array):
                 global class1
                 if array[1] == "palladin":
                     class1 = 2
+                    cardPicker=False
                 elif array[1] == "barbarian":
                     class1 = 3
+                    cardPicker=False
                 elif array[1] == "smith":
                     class1 = 1
+                    cardPicker=False
 
 
 def mainDeckMulti():
