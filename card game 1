@@ -436,9 +436,17 @@ def muilti(): #muiltiplayer function
         pygame.display.flip()
 
         deck = []
+        classPicker("multi")
+        cards = []
+        cards.append(card_list[0])
+        cards.append(card_list[int(class1)])
+        wn.fill(WHITE)
+        pygame.display.flip()
         for i in range(20): #20 card deck
             card = random.choice(card_list) #get random card from cardlist
-            deck.append(cards[card]) #add that card to there deck
+            card = random.choice(card)
+            deck.append(card)
+            print(deck) #add that card to there deck
         hand = []
         for i in range(5): #5 card hand
             card = random.choice(deck) #get random card from deck
@@ -560,12 +568,9 @@ def classPicker(mode):
             txt_button("Exit", 600, 200, 75, 75, GREEN, DARKGREEN, BLACK, terminate, "")
             #Class Picking
             message_display("First Pick Your Class. This will allow you to use cards with a more specific set of skills", 450, 150, 20, GREEN)
-            array = [mode, "plladin"]
-            txt_button("Palladin", 200, 400, 150, 100, GREEN, DARKGREEN, BLACK, cardPicker, array)
-            array = [mode, "mage"]
-            txt_button("Mage", 400, 400, 150, 100, GREEN, DARKGREEN, BLACK, cardPicker, array)
-            array = [mode, "smith"]
-            txt_button("Smith", 600, 400, 150, 100, GREEN, DARKGREEN, BLACK, cardPicker, array)
+            txt_button("Palladin", 200, 400, 150, 100, GREEN, DARKGREEN, BLACK, cardPicker, [mode, "plladin"])
+            txt_button("Barbarian", 400, 400, 150, 100, GREEN, DARKGREEN, BLACK, cardPicker, [mode, "barbarian"])
+            txt_button("Smith", 600, 400, 150, 100, GREEN, DARKGREEN, BLACK, cardPicker, [mode, "smith"])
         pygame.display.flip()
 
 def displayCard(card,cardKey, deck):
@@ -573,7 +578,7 @@ def displayCard(card,cardKey, deck):
     #[X, Y, WIDTH, HEIGHT]
     cardAttributes = ["Name:", "Health Modifier:", "Armour Modifer:", "Weapon Modifer:", "Durability:", "Card Type:"]
     cardOneTemplate = [300, 400, 150, 200]
-    img_button(cardOneTemplate[0], cardOneTemplate[1], cardOneTemplate[2], cardOneTemplate[3], cardSelect, card, card, deck)
+    img_button(cardOneTemplate[0], cardOneTemplate[1], cardOneTemplate[2], cardOneTemplate[3], cardSelect, card, deck)
         #Description Layout
     cardAttributeY = cardOneTemplate[1] + 250
     attributeY = cardOneTemplate[1] + 250
@@ -596,18 +601,22 @@ def cardPicker(array):
             if array[0] == "single":
                 if array[1] == "palladin":
                     displayCard("1.jpg","0001", mainDeckSingle)
-                elif array[1] == "mage":
+                    pygame.display.flip()
+                elif array[1] == "barbarian":
                     displayCard("2.jpg","0002", mainDeckSingle)
+                    pygame.display.flip()
                 elif array[1] == "smith":
                     displayCard("3.jpg", "0002", mainDeckSingle)
+                    pygame.display.flip()
             elif array[0] == "multi":
+                global class1
                 if array[1] == "palladin":
-                    displayCard("1.jpg","0001", mainDeckMulti)
-                elif array[1] == "mage":
-                    displayCard("2.jpg", "0002", mainDeckMulti)
+                    class1 = 2
+                elif array[1] == "barbarian":
+                    class1 = 3
                 elif array[1] == "smith":
-                    displayCard("3.jpg", "0003", mainDeckMulti)
-        pygame.display.flip()
+                    class1 = 1
+
 
 def mainDeckMulti():
     pass
