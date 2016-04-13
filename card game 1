@@ -72,10 +72,11 @@ def txt_button(msg,x,y,w,h,inactive_colour,active_colour,text_colour,name_of_fun
     if x+w > mouse[0] > x and y+h > mouse[1] > y: #check if mouse is on button
         pygame.draw.rect(screen, active_colour,(x,y,w,h)) #change to active colour
         if click[0] == 1: #check click (above if checks mouse is on button)
-            if argument=="":
-                name_of_function_to_call_when_clicked() #do this when clicked (veriable needs not to have brackets)
-            else:
-                name_of_function_to_call_when_clicked(argument) #do this when clicked (veriable needs not to have brackets)
+            if name_of_function_to_call_when_clicked!="null":
+                if argument=="":
+                    name_of_function_to_call_when_clicked() #do this when clicked (veriable needs not to have brackets)
+                else:
+                    name_of_function_to_call_when_clicked(argument) #do this when clicked (veriable needs not to have brackets)
     else:
         pygame.draw.rect(screen, inactive_colour,(x,y,w,h)) #mouse not on button, switch to inactive colour
 
@@ -392,6 +393,9 @@ def muilti(): #muiltiplayer function
 
     def set_enemy(): #set up enemy player
         global ehealth, eamour, eweapons, ename, edeck, ehand, eamourm, eweaponsm, edurability
+        cards = []
+        cards.append(card_list[0])
+        cards.append(card_list[int(class1)])
         ehealth = 20 #there health
         eamour = 5 #there amour
         eamourm = 0 #there amour mod
@@ -400,9 +404,11 @@ def muilti(): #muiltiplayer function
         edurability = 0 #there durability
         ename = keyboard(1,2, "enter the name of palyer 2") #there name
         edeck = []
+        card = random.choice(card_list)
+        print("card: ",card)
         for i in range(20): #20 card deck
             card = random.choice(card_list) #get random card from cardlist
-            edeck.append(cards[card]) #add that card to there deck
+            edeck.append(card) #add that card to there deck
         ehand = []
         for i in range(5): #5 card hand
             card = random.choice(edeck) #get random card from deck
@@ -474,6 +480,30 @@ def muilti(): #muiltiplayer function
         turn = False #end turn
         contvar=2
 
+    def showcardsheld():
+        global hand
+        print(hand)
+        for i in range(len(hand)):
+            displaycardsheld(i)
+
+    def displaycardsheld(id):
+        global hand
+        print("displaying card: ",hand[id])
+        if hand[id][1]==0:
+            #weapon
+            image = pygame.image.load(os.path.join("cards","weapon base.jpg"))
+            screen.blit(image, ((id*120)+100,400)) #the location of the image
+            message_display("Attack: "+str(hand[id][1]),(id*120)+160,515,12,BLACK)
+            message_display("Mana cost: "+str(hand[id][4]),(id*120)+160,535,12,BLACK)
+            message_display("Duribility: "+str(hand[id][3]),(id*120)+160,555,12,BLACK)
+        if hand[id][1]>0:
+            #armour
+            image = pygame.image.load(os.path.join("cards","armour base.jpg"))
+            screen.blit(image, ((id*120)+100,400)) #the location of the image
+            message_display("Attack: "+str(hand[id][1]),(id*120)+160,515,12,BLACK)
+            message_display("Mana cost: "+str(hand[id][4]),(id*120)+160,535,12,BLACK)
+            message_display("Duribility: "+str(hand[id][3]),(id*120)+160,555,12,BLACK)
+
     def turn():
         global health, amour, weapons, name, deck, hand, ehealth, eamour, eweapons, ename, edeck, ehand, first, amourm, weaponsm, eamourm, ewaponsm, durability, edurability, deck, hand, contvar, turn
         if first == True: #if first time run say who fighting who.
@@ -501,8 +531,9 @@ def muilti(): #muiltiplayer function
                 if contvar!=2:
                     txt_button("Attack",100,100,100,20,GREEN,DARKGREEN,BLACK,attack,"")
                 else:
-                    txt_button("Attack",100,100,100,20,DARKGREEN,DARKGREEN,BLACK,attack,"")
+                    txt_button("Attack",100,100,100,20,DARKGREEN,DARKGREEN,BLACK,"null","")
                 txt_button("End",200,100,100,20,GREEN,DARKGREEN,BLACK,end,"")
+                txt_button("Show cards",300,100,100,20,GREEN,DARKGREEN,BLACK,showcardsheld,"")
                 pygame.display.flip()
             time.sleep(0.2)
 ##            else: #dont realy inderstant what this did/is far. Was as an else on when the user enterd a word not understood on the old keyboard.
