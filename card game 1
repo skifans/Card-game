@@ -15,7 +15,7 @@ GREEN     = (  0, 255,   0)
 WHITE     = (255, 255, 255)
 DARKGREEN = (  0, 155,   0)
 GREY      = (211, 211, 211)
-Red       = (255,   0,   0)
+RED       = (255,   0,   0)
 BGCOLOR = WHITE
 
 #set up display
@@ -91,7 +91,7 @@ def img_button(x,y,w,h,name_of_function_to_call_when_clicked,filename,argument):
     if x+w > mouse[0] > x and y+h > mouse[1] > y: #check if mouse is on button
         print("on card "+str(filename))
         if click[0] == 1: #check click (above if checks mouse is on button)
-            name_of_function_to_call_when_clicked() #do this when clicked (veriable needs not to have brackets)
+            name_of_function_to_call_when_clicked(argument) #do this when clicked (veriable needs not to have brackets)
 
 def set_cards(blank): #set up the cards function
     global card_list
@@ -526,17 +526,17 @@ def classPicker(mode):
 def displayCard(card,cardKey, deck):
         #Set up template so that position, description etc. can be easily modified no matter the card
     #[X, Y, WIDTH, HEIGHT]
-    cardAttributes = ["Name:", "Health Modifier:", "Armour Modifer:", "Weapon Modifer:", "Durability:", "Card Type:"]
+    cardAttributes = ["Attack:", "Defence:", "Durability:", "Mana Cost:", "Name:", "Effect or not:"]
     cardOneTemplate = [300, 400, 150, 200]
-    img_button(cardOneTemplate[0], cardOneTemplate[1], cardOneTemplate[2], cardOneTemplate[3], cardSelect, card, deck)
+    img_button(cardOneTemplate[0], cardOneTemplate[1], cardOneTemplate[2], cardOneTemplate[3], cardSelect, card, card)
         #Description Layout
     cardAttributeY = cardOneTemplate[1] + 250
     attributeY = cardOneTemplate[1] + 250
     for i in (cardAttributes):
-        message_display(i, cardOneTemplate[0]+50, attributeY, 20, BLACK)
+        message_display(i, cardOneTemplate[0], attributeY, 20, BLACK)
         attributeY += 20
     for i in range(0,(len(cardAttributes))):
-        message_display(str(cards[cardKey][i]), cardOneTemplate[0]+ 150, cardAttributeY,20, GREEN)
+        message_display(str(card_list[cardKey][1][i]), cardOneTemplate[0]+150, cardAttributeY,20, GREEN)
         cardAttributeY += 20
 
 def cardPicker(array):
@@ -546,19 +546,19 @@ def cardPicker(array):
     while cardPicker == True:
         for event in pygame.event.get():
             wn.fill(DARKPINK)
-            txt_button("Return", 200, 200, 75, 75, GREEN, DARKGREEN, BLACK, menuFunction, "")
+            txt_button("Return", 200, 200, 75, 75, GREEN, DARKGREEN, BLACK, classPicker, "single")
             txt_button("Exit", 600, 200, 75, 75, GREEN, DARKGREEN, BLACK, terminate, "")
             #Class Picking
             message_display("Pick your cards from classes below: 20 Cards in Total", 450, 150, 20, GREEN)
             if array[0] == "single":
                 if array[1] == "palladin":
-                    displayCard("1.jpg","0001", mainDeckSingle)
+                    displayCard("1.jpg", 0, mainDeck)
                     pygame.display.flip()
                 elif array[1] == "barbarian":
-                    displayCard("2.jpg","0002", mainDeckSingle)
+                    displayCard("2.jpg", 1, mainDeck)
                     pygame.display.flip()
                 elif array[1] == "smith":
-                    displayCard("3.jpg", "0002", mainDeckSingle)
+                    displayCard("3.jpg", 2, mainDeck)
                     pygame.display.flip()
             elif array[0] == "multi":
                 global class1
@@ -576,13 +576,13 @@ def cardPicker(array):
 def mainDeckMulti(blank):
     pass
 
-def cardSelect(cardFile, deck):
-    if checkDeck(deck) == True:
-        deck.append(cardFile)
+def cardSelect(card):
+    if checkDeck(mainDeck) == True:
+        mainDeck.append(card)
     else:
         message_display("WARNING DECK ALREADY AT MAX CAPACITY", 400, 450, 30, RED)
-    print(deck)
-    return(deck)
+    print(mainDeck)
+    return(mainDeck)
 """NOTE DECK SIZE AT 10 FOR TESTING PURPOSES ONLY"""
 def checkDeck(deck):
     cardCount=0
@@ -594,7 +594,7 @@ def checkDeck(deck):
         return True
 
 def deckLoader(adeck):
-    if adeck == "mainDeckSingle":
+    if adeck == "mainDeck":
         print("if")
         for line in decks:
             print("I")
