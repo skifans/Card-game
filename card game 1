@@ -100,6 +100,28 @@ def img_button(x,y,w,h,name_of_function_to_call_when_clicked,filename,argument):
         if click[0] == 1: #check click (above if checks mouse is on button)
             name_of_function_to_call_when_clicked() #do this when clicked (veriable needs not to have brackets)
 
+def showcardsheld(hand):
+    print(hand)
+    for i in range(len(hand)):
+        displaycardsheld(i,hand)
+
+def displaycardsheld(id, hand):
+    print("displaying card: ",hand[id])
+    if hand[id][1]==0:
+        #weapon
+        image = pygame.image.load(os.path.join("cards","weapon base.jpg"))
+        screen.blit(image, ((id*120)+100,400)) #the location of the image
+        message_display("Attack: "+str(hand[id][1]),(id*120)+160,515,12,BLACK)
+        message_display("Mana cost: "+str(hand[id][4]),(id*120)+160,535,12,BLACK)
+        message_display("Duribility: "+str(hand[id][3]),(id*120)+160,555,12,BLACK)
+    if hand[id][1]>0:
+        #armour
+        image = pygame.image.load(os.path.join("cards","armour base.jpg"))
+        screen.blit(image, ((id*120)+100,400)) #the location of the image
+        message_display("Attack: "+str(hand[id][1]),(id*120)+160,515,12,BLACK)
+        message_display("Mana cost: "+str(hand[id][4]),(id*120)+160,535,12,BLACK)
+        message_display("Duribility: "+str(hand[id][3]),(id*120)+160,555,12,BLACK)
+
 def set_cards(blank): #set up the cards function
     global card_list
     # Order for Arrays: Type, Attack,defence, Duribility, mana cost, name, effect or not
@@ -388,7 +410,6 @@ def muilti(blank): #muiltiplayer function
             card = random.choice(card_list) #get random card from cardlist
             card = random.choice(card)
             deck_1.append(card)
-            print(deck_1) #add that card to there deck
         hand_1 = []
         for i in range(5): #5 card hand
             card = random.choice(deck_1) #get random card from deck
@@ -416,7 +437,6 @@ def muilti(blank): #muiltiplayer function
             card = random.choice(card_list) #get random card from cardlist
             card = random.choice(card)
             deck_2.append(card)
-            print(deck_2) #add that card to there deck
         hand_2 = []
         for i in range(5): #5 card hand
             card = random.choice(deck_2) #get random card from deck
@@ -436,7 +456,7 @@ def muilti(blank): #muiltiplayer function
         def player_1_stats(health_1, amour_mod_1, weapon_1):
             text = 'Health: ' + str(health_1)
             message_display_left(text,50,25,15,BLACK)
-            text = 'Armour: '
+            text = 'Armour: '+str(amour_mod_1[0][0]+amour_mod_1[1][0]+amour_mod_1[2][0]+amour_mod_1[3][0])
             message_display_left(text,50,40,15,BLACK)
             text = '    head: '+str(amour_mod_1[0][0])
             message_display_left(text,50,55,15,BLACK)
@@ -457,7 +477,7 @@ def muilti(blank): #muiltiplayer function
         def player_2_stats(health_2, amour_mod_2, weapon_2):
             text = 'Health: ' + str(health_2)
             message_display_left(text,50,25,15,BLACK)
-            text = 'Armour: '
+            text = 'Armour: '+str(amour_mod_2[0][0]+amour_mod_2[1][0]+amour_mod_2[2][0]+amour_mod_2[3][0])
             message_display_left(text,50,40,15,BLACK)
             text = '    head: '+str(amour_mod_2[0][0])
             message_display_left(text,50,55,15,BLACK)
@@ -476,12 +496,14 @@ def muilti(blank): #muiltiplayer function
             pygame.display.flip()
 
         def player_1_turn(blank):
-            player_1_stats(health_1,amour_mod_1,weapon_1)
             global turnstart
             turnstart = False
             wn.fill(BGCOLOR)
-            pygame.display.flip()
             player_1_stats(health_1,amour_mod_1,weapon_1)
+            pygame.display.flip()
+            print(deck_1)
+            print(hand_1)
+            showcardsheld(hand_1)
 
         wn.fill(BGCOLOR)
         pygame.display.flip()
