@@ -37,7 +37,7 @@ Goggles = [3,0,5,3,"Goggles",1]
 Forge_guard = [3,4,5,4,"Forge Guard",0]
 
 Smiths_apron = [4,2,2,2,"Smith's Apron",0]
-Anvil = [4,3,3,"Anvil",1]
+Anvil = [4,3,3,4,"Anvil",1]
 Forged_armour = [4,5,5,5,"Forged Armour",0]
 
 
