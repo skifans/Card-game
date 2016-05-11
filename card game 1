@@ -107,22 +107,22 @@ def showcardsheld(hand):
 
 def displaycardsheld(id, hand):
     print("displaying card: ",hand[id])
-    if hand[id][1]==0:
-        #"Name:", "Health Modifier:", "Armour Modifer:", "Weapon Modifer:", "Durability:", "Card Type:"
+    if hand[id][0]==0:
+        #type (0 = weapon, 1 = gloves, 2 = legs, 3= face, 4 = chest), attack, defense, durability, mana cost (?) name, effect.
 
         #weapon
         image = pygame.image.load(os.path.join("cards","weapon base.jpg"))
         screen.blit(image, ((id*120)+100,400)) #the location of the image
-        message_display(""+str(hand[id][3]),(id*120)+108,504,12,WHITE) #attack
-        message_display(""+str(hand[id][0]),(id*120)+155,581,12,BLACK) #mana cost (?) - where is this saved?
-        message_display(""+str(hand[id][4]),(id*120)+208,504,12,BLACK) #durability
-    if hand[id][1]>0:
+        message_display(""+str(hand[id][1]),(id*120)+108,504,12,WHITE) #attack
+        message_display(""+str(hand[id][4]),(id*120)+155,581,12,BLACK) #mana cost (?) - where is this saved?
+        message_display(""+str(hand[id][3]),(id*120)+208,504,12,BLACK) #durability
+    if hand[id][0]>0:
         #armour
         image = pygame.image.load(os.path.join("cards","armour base.jpg"))
         screen.blit(image, ((id*120)+100,400)) #the location of the image
         message_display(""+str(hand[id][2]),(id*120)+108,504,12,WHITE) #defence
-        message_display(""+str(hand[id][0]),(id*120)+155,581,12,BLACK) #mana cost (?)
-        message_display(""+str(hand[id][4]),(id*120)+208,504,12,BLACK) #durability
+        message_display(""+str(hand[id][4]),(id*120)+155,581,12,BLACK) #mana cost (?)
+        message_display(""+str(hand[id][3]),(id*120)+208,504,12,BLACK) #durability
 
 def set_cards(blank): #set up the cards function
     global card_list
