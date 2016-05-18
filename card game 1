@@ -504,10 +504,19 @@ def muilti(blank): #muiltiplayer function
             turnstart = False
             wn.fill(BGCOLOR)
             player_1_stats(health_1,amour_mod_1,weapon_1)
-            pygame.display.flip()
             print(deck_1)
             print(hand_1)
             showcardsheld(hand_1)
+            pygame.display.flip()
+            #hold screen at menu until turn finnished
+            global turnstart
+            turnstart = True
+            while turnstart:
+                for event in pygame.event.get():
+                    txt_button("End turn", 300, 250, 250, 50, WHITE, GREY, BLACK, player_1_turn,"")
+                    txt_button("Close",300,150,200,50,GREEN,DARKGREEN,BLACK,terminate, "") #make close button
+                    pygame.display.flip()
+
 
         wn.fill(BGCOLOR)
         pygame.display.flip()
