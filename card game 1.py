@@ -313,7 +313,7 @@ def keyboard(minlength, InputOn1, message):
                         clear()
                 elif key[pygame.K_BACKSPACE]:
                     if len(string)>0:
-                        backspace()
+                        backspace('')
                 elif key[pygame.K_RETURN]:
                     if len(string)>0:
                         closeinput(string)
