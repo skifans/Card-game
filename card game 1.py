@@ -418,7 +418,7 @@ def muilti(blank): #muiltiplayer function
                      #[head  ,chest ,arms  ,legs  ]
         amour_mod_1 = [[0,''],[0,''],[0,''],[0,'']]
         weapon_1 = [None, 0, 'A']
-        name_1 = keyboard(0, 2, "Name of palyer 1")
+        name_1 = keyboard(0, 2, "Please enter the name of Player 1")
 
         deck_1 = []
         classPicker("multi")
@@ -445,7 +445,7 @@ def muilti(blank): #muiltiplayer function
                      #[head  ,chest ,arms  ,legs  ]
         amour_mod_2 = [[0,''],[0,''],[0,''],[0,'']]
         weapon_2 = [None, 0, 'A']
-        name_2 = keyboard(0, 2, "Name of palyer 2")
+        name_2 = keyboard(0, 2, "Please enter the name of Player 2")
 
         deck_2 = []
         classPicker("multi")
